@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$title?></title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css">
 </head>
 <body>
 <script src="<?php echo base_url();?>js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo base_url();?>js/jquery-3.5.1.slim.min.js"></script>
+<script src="<?php echo base_url();?>js/jquery-3.4.1.min.js"></script>
+<script src="<?php echo base_url();?>js/ajax.js"></script>
     <!-- <header>
     </header> -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -24,6 +26,15 @@
                 </li>
                 <li class="nav-item"> 
                     <a class="nav-link" href="<?=site_url('Carreras_controller')?>">Carreras</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" href="<?=site_url('Materias_controller')?>">Materias</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" href="<?=site_url('Profesores_controller')?>">Profesores</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link" href="<?=site_url('Grupos_controller')?>">Grupos</a>
                 </li>
             </ul>
         </div>

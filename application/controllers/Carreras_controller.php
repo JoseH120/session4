@@ -8,10 +8,12 @@
             parent::__construct();
             $this->load->helper('url');
             $this->load->library('session');
+            $this->load->library('form_validation');
         }
         
-        // funcion que cargan las vistas
+        // ================================FUNCIONES QUE CARGAN LAS VISTAS==================================
         public function index(){
+            
             $this->load->model('Carrera_model');
             $data = array(
                 "records" => $this->Carrera_model->getAll(),
@@ -20,6 +22,7 @@
             $this->load->view("shared/header", $data);
             $this->load->view("carreras/index", $data);
             $this->load->view("shared/footer");
+            
         }
 
         public function insertar(){
@@ -44,39 +47,117 @@
             $this->load->view("carreras/add_edit", $data);
             $this->load->view("shared/footer");
         }
-
-        //Funciones de operaciones
+        //============================== FIN DE VISTAS =========================================//
+        //============================FUNCIONES DE OPERACIONES=====================================//
         public function add(){
-            $this->load->model('Carrera_model');
-            $data = array(
-                "idcarrera" => $this->input->post("idcarrera"),
-                "carrera" => $this->input->post("carrera"),
-            );
-            $rows = $this->Carrera_model->insert($data);
+            /* 
+                REGLAS DE VALIDACION DEL FORMULARIO
+                required: indica que el campo es obligatorio
+                min_length: indica que la cadena debe tener al menos una cantidad determinada de caracteres
+                max_length: indica que la cadena debe tener como maximo una cantidad determinada de caracteres
+            */
+            $this->form_validation->set_error_delimiters('', '');
+            $this->form_validation->set_rules("idcarrera", "Id Carrera", "required|min_length[3]|max_length[3]");
+            $this->form_validation->set_rules("carrera", "Carrera", "required|min_length[3]|max_length[100]");
 
-            if($rows > 0){
-                $this->session->set_flashdata('success', 'Informacion guardada correctamente');
+            //Modificando el mensaje de validacion para los errores, en este caso para 
+            /* La regla required
+                La regla min_length
+                La regla max_length */
+            $this->form_validation->set_message('required', 'El campo %s es requerido');
+            $this->form_validation->set_message('min_length', 'El campo %s debe tener al menso %s caracteres.');
+            $this->form_validation->set_message('max_length', 'El campo %s debe tener como maximo %s caracteres');
+
+            // Parametros de respuesta
+            header('Content-type: application/json');
+            $statusCode = 200;
+            $msg = "";
+            // Se ejecuta la validacion del formulario
+            if($this->form_validation->run()){
+                // Si la validacion fue exitosa, entonces entra aca.
+                try{
+                    $this->load->model('Carrera_model');
+                    $data = array(
+                        "idcarrera" => $this->input->post("idcarrera"),
+                        "carrera" => $this->input->post("carrera"),
+                    );
+                    $rows = $this->Carrera_model->insert($data);
+                    if($rows > 0){
+                        $msg = "Informacion guardada correctamente.";
+                    }else{
+                        //Si $rows entra aca es porque hubo un error al insertar
+                        $statusCode = 500;
+                        $msg = "No se pudo guardar la informacion";
+                    }
+                }catch(Exception $ex){
+                    //Si aca es porque hubo un error al momento de ejecutar este metodo
+                    $statusCode = 500;
+                    $msg = "Ocurrio un error.";
+                }
             }else{
-                $this->session->set_flashdata('error', 'No se guardo la informacion');
+                //Si hubo errores de validacion entra aca
+                $statusCode  = 400;
+                $msg = "Ocurrieron errores de validacion.";
+                $errors = array();
+                foreach($this->input->post() as $key => $value){
+                    $errors[$key] = form_error($key);
+                }
+                $this->data['errors'] = $errors;
             }
-            redirect("Carreras_controller");
-
+            $this->data['msg'] = $msg;
+            $this->output->set_status_header($statusCode);
+            //Se devuelve el objeto json con la informacion 
+            echo json_encode($this->data);
         }
 
         public function update(){
-            $this->load->model('Carrera_model');
-            $data = array(
-                "idcarrera" => $this->input->post("idcarrera"),
-                "carrera" => $this->input->post("carrera"),
-            );
-            try{
-                $rows = $this->Carrera_model->update($data, $this->input->post("PK_carrera"));
-                $this->session->set_flashdata('success', "Informacion modificada correctamente");
-                redirect("Carreras_controller/modificar/".$data["idcarrera"]);
-            }catch(Exception $e){
-                $this->session->set_flashdata('error', "No se modifico la informacion.");
-                redirect("Carreras_controller/modificar/".$data["idcarrera"]);
+            // Reglas de validacion del formulario
+            /*  required: indica que el campo es obligatorio
+                min_length: indica que la cdena debe tener al menos una cantidad determinada de caracteres
+                max_length: indica que la cadena debe tener como maximo una cantidad determinada de caracteres */
+            $this->form_validation->set_error_delimiters('', '');
+            $this->form_validation->set_rules("idcarrera", "Id Carrera", "required|min_length[3]|max_length[3]");
+            $this->form_validation->set_rules("carrera", "Carrera", "required|min_length[3]|max_length[100]");
+
+            //Modificando el mensaje de validacion para los errores, en este caso para 
+            /*  La regla required */
+            $this->form_validation->set_message('required', 'El campo %s es requerido');
+            $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos %s caracteres.');
+            $this->form_validation->set_message('max_length', 'El campo %s debe tener como maximo %s caracteres.');
+
+            //Parametros de respuesta
+            header('Content-type: application/json');
+            $statusCode = 200;
+            $msg = "";
+
+            //Se ejecuta la validacion del formulario
+            if($this->form_validation->run()){
+                //si la validacion fue exitosa, entonces entra aca
+                try{
+                    $this->load->model('Carrera_model');
+                    $data = array(
+                        "idcarrera" => $this->input->post("idcarrera"),
+                        "carrera" => $this->input->post("carrera"),
+                    );
+                    $rows = $this->Carrera_model->update($data, $this->input->post("PK_carrera"));
+                    $msg = "Informacion guardada correctamente.";
+                }catch(Exception $ex){
+                    $statusCode = 500;
+                    $msg = "Ocurrio un error.";
+                }
+            }else{
+                $statusCode = 400;
+                $msg = "Ocurrieron errores de validacion.";
+                $errors = array();
+                foreach($this->input->post() as $key => $value){
+                    $errors[$key] = form_error($key);
+                }
+                $this->data['errors'] = $errors;
             }
+            $this->data['msg'] = $msg;
+            $this->output->set_status_header($statusCode);
+            //Se devuelve el objeto Json con la informacion
+            echo json_encode($this->data);
         }
 
         public function eliminar($id){
@@ -85,10 +166,10 @@
             if($result){
                 $this->session->set_flashdata('success', "Registro borrado correctamente");
             }else{
-                $this->session->set_flashdata('success', "No se pudo borrar el registro.");
+                $this->session->set_flashdata('error', "No se pudo borrar el registro.");
             }
             redirect("Carreras_controller");
         }
-
+        //============================FIN DE FUNCIONES ======================================= 
     }
 ?>

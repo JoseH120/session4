@@ -19,7 +19,7 @@
     <div class="ml-md-4 mr-md-4">
         <div class="row">
             <div class="offset-md-2 col-md-4 col-sm-12">
-                <form action="<?=site_url("Estudiantes_controller");?>/<?=isset($estudiante)? "update" : 'add'; ?>" method="POST">
+                <form action="<?=site_url("Estudiantes_controller");?>/<?=isset($estudiante)? "update" : 'add'; ?>" method="POST" class="form-ajax">
                     <div class="form">
                         <div class="form-group">
                             <input class="form-control" type="hidden" name="PK_estudiante" value="<?=isset($estudiante) ? $estudiante->idestudiante : ""; ?>">

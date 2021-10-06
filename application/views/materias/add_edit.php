@@ -9,7 +9,7 @@
     <div class="ml-md-4 mr-md-4">
         <div class="title">
             <div class="col-12">
-                <h3><?php echo isset($carrera) ? "Modificar" : "Agregar"; ?></h3>
+                <h3><?php echo isset($materia) ? "Modificaar" : "Agregar";?></h3>
             </div>
         </div>
     </div>
@@ -19,27 +19,27 @@
     <div class="ml-md-4 mr-md-4">
         <div class="row">
             <div class="offset-md-2 col-md-4 col-sm-12">
-                <form action="<?=site_url("Carreras_controller");?>/<?=isset($carrera)? "update" : 'add'; ?>" method="POST" class="form-ajax">
+                <form action="<?=site_url("Materias_controller");?>/<?= isset($materia)?"update" : "add"; ?>" method="POST" class="form-ajax">
                     <div class="form">
                         <div class="form-group">
-                            <input class="form-control" type="hidden" name="PK_carrera" value="<?=isset($carrera) ? $carrera->idcarrera : ""; ?>">
+                            <input class="form-control" type="hidden" name="PK_materia"
+                            value="<?= isset($materia) ? $materia->idmateria : "";?>" />
                         </div>
-                        
+
                         <div class="form-group">
-                            <label>Id carrera:</label>
-                            <input class="form-control" type="text" name="idcarrera" value="<?=isset($carrera) ? $carrera->idcarrera : "" ;?>" />
+                            <label>Id Materia:</label>
+                            <input type="text" class="form-control" name="idmateria" value="<?=isset($materia) ? $materia->idmateria : ""; ?>"/>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label>Carrera :</label>
-                            <input class="form-control" type="text" name="carrera" value="<?=isset($carrera) ? $carrera->carrera : "" ;?>" />
+                            <label>Materia:</label>
+                            <input class="form-control" type="text" name="materia" value="<?=isset($materia) ? $materia->materia :""; ?>" />
                         </div>
-                        <br/>
+
                         <div class="form-group">
-                            <input class="btn btn-success" type="submit" value="Guardar">
-                            <a class='btn btn-success' href="<?= site_url('Carreras_controller');?>">Volver</a>
+                            <input type="submit" class="btn btn-success" value="Guardar">
+                            <a class="btn btn-success" href="<?=site_url('Materias_controller');?>">Volver</a>
                         </div>
-                        
                     </div>
                 </form>
             </div>

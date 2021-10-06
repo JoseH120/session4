@@ -2,7 +2,7 @@
     defined('BASEPATH') or exit('No direct script access allowed'); 
     class Estudiante_model extends CI_Model 
     { 
-        public function  construct() 
+         public function  __construct() 
         { 
             parent::__construct(); 
         } 
@@ -28,8 +28,7 @@
             } 
         } 
         
-        public function getById($id) 
-        { 
+        public function getById($id){ 
             return $this->db->get_where("estudiantes", array("idestudiante" => $id))->row(); 
         } 
         
