@@ -19,7 +19,7 @@
         }
 
         public function delete($id){
-            if($this->db->delete("materias", "idmateria='".$id."'"));
+            if($this->db->delete("materias", "idmateria='".$id."'"))
             {
                 return true;
             }
@@ -30,11 +30,15 @@
         }
 
         public function update($data, $id){
-            $this->db->set($data);
-            $this->db->where("idmateria", $id);
-            $this->db->update("materias", $data);
-            $rows = $this->db->affected_rows();
-            return $rows;
+            // $this->db->set($data);
+            try{
+                $this->db->where("idmateria", $id);
+                $this->db->update("materias", $data);
+                $rows = $this->db->affected_rows();
+                return $rows;
+            }catch(Exception $ex){
+                return -1;
+            }
         }
     }
 ?>

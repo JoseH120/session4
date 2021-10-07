@@ -8,6 +8,9 @@
             $this->load->helper('url');
             $this->load->library('session');
             $this->load->library('form_validation');
+            if(!isset($this->session->userdata['logged_in'])){
+                redirect("/");
+            }
         }
 
         //--------------- FUNCIONES QUE CARGAN LAS VISTAS -----------------
@@ -24,7 +27,7 @@
 
         public function insertar(){
             $data = array(
-                "title" => "Insertar profesores", 
+                "title" => "Insertar profesor", 
             );
             $this->load->view("shared/header", $data);
             $this->load->view("profesores/add_edit",$data);
@@ -35,7 +38,7 @@
             $this->load->model('Profesor_model');
             $model = $this->Profesor_model->getById($id);
             $data = array(
-                "title" => "Modificar profesores",
+                "title" => "Modificar profesor",
                 "profesor" => $model,
             );
             $this->load->view("shared/header", $data);
@@ -49,7 +52,7 @@
 
         public function add(){
             $this->form_validation->set_error_delimiters('', '');
-            $this->form_validation->set_rules("idprofesor", "Id Profesor", "required|is_natural_no_zero");
+            // $this->form_validation->set_rules("idprofesor", "Id Profesor", "required|is_natural_no_zero");
             $this->form_validation->set_rules("nombre", "Nombre", "required|max_length[100]");
             $this->form_validation->set_rules("apellido", "Apellido", "required|max_length[100]");
             $this->form_validation->set_rules("fecha_nacimiento", "Fecha Nacimiento", "required");
@@ -69,7 +72,7 @@
                 try{
                     $this->load->model("Profesor_model");
                     $data = array(
-                        "idprofesor" => $this->input->post('idprofesor'),
+                        // "idprofesor" => $this->input->post('idprofesor'),
                         "nombre" => $this->input->post("nombre"),
                         "apellido" => $this->input->post("apellido"),
                         "fecha_nacimiento" => $this->input->post("fecha_nacimiento"),
@@ -106,7 +109,7 @@
         public function update(){
             $this->form_validation->set_error_delimiters('', '');
             
-            $this->form_validation->set_rules("idprofesor", "Id Profesor", "required|is_natural_no_zero");
+            // $this->form_validation->set_rules("idprofesor", "Id Profesor", "required|is_natural_no_zero");
             $this->form_validation->set_rules("nombre", "Nombre", "required|max_length[100]");
             $this->form_validation->set_rules("apellido", "Apellido", "required|max_length[100]");
             $this->form_validation->set_rules("fecha_nacimiento", "Fecha Nacimiento", "required");

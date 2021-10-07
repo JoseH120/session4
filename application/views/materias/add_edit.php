@@ -9,7 +9,7 @@
     <div class="ml-md-4 mr-md-4">
         <div class="title">
             <div class="col-12">
-                <h3><?php echo isset($materia) ? "Modificaar" : "Agregar";?></h3>
+                <h3><?php echo isset($materia) ? "Modificar" : "Agregar";?></h3>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             <label>Id Materia:</label>
-                            <input type="text" class="form-control" name="idmateria" value="<?=isset($materia) ? $materia->idmateria : ""; ?>"/>
+                            <input type="text" class="form-control" name="idmateria" value="<?=isset($materia) ? $materia->idmateria : ""; ?>" readonly/>
                         </div>
 
                         <div class="form-group">

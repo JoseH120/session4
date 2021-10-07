@@ -8,7 +8,8 @@
         }
 
         public function getAll(){
-            $query = $this->db->get("profesores");
+            // $query = $this->db->get("profesores");
+            $query = $this->db->query("SELECT idprofesor, concat(nombre,' ',apellido) nombrecompleto, profesion, fecha_nacimiento, email FROM profesores;");
             $records  = $query->result();
             return $records;
         }
@@ -26,7 +27,7 @@
         }
 
         public function delete($id){
-            if($this->db->delete('profesores', 'idprofesor='.$id)){
+            if($this->db->delete('profesores', "idprofesor='".$id."'")){
                 return true;
             }
         }
@@ -36,11 +37,14 @@
         }
 
         public function update($data, $id){
-            $this->db->set($data);
-            $this->db->where('idprofesor', $id);
-            $this->db->update('profesores', $data);
-            $rows = $this->db->affected_rows();
-            return $rows;
+            try{
+                $this->db->where('idprofesor', $id);
+                $this->db->update('profesores', $data);
+                $rows = $this->db->affected_rows();
+                return $rows;
+            }catch(Exception $ex){
+                return -1;
+            }
         }
     }
 ?>

@@ -6,6 +6,9 @@
             $this->load->helper('url');
             $this->load->library('session');
             $this->load->library('form_validation');
+            if(!isset($this->session->userdata['logged_in'])){
+                redirect("/");
+            }
         }
 
         //================= FUNCIONES QUE CARGAN LAS VISTAS ============================ //
@@ -48,14 +51,14 @@
         public function add(){
             // Reglas de validacion del formulario
             $this->form_validation->set_error_delimiters('','');
-            $this->form_validation->set_rules("idmateria","Id Materia","required|is_natural_no_zero|is_unique[materias.idmateria]");
+            // $this->form_validation->set_rules("idmateria","Id Materia","required|is_natural_no_zero|is_unique[materias.idmateria]");
             $this->form_validation->set_rules("materia", "Materia", "required|max_length[50]");
             
             // Modificando el mensaje de validacion para los errores
-            $this->form_validation->set_message('is_natural_no_zero','El campo %s debe ser numero entero mayor que cero');
+            // $this->form_validation->set_message('is_natural_no_zero','El campo %s debe ser numero entero mayor que cero');
             $this->form_validation->set_message('required', 'El campo %s es requerido');
             $this->form_validation->set_message('max_length', 'El campo %s debe tener como maximo %s caracteres');
-            $this->form_validation->set_message('is_unique', 'El campo %s debe ser unico');
+            // $this->form_validation->set_message('is_unique', 'El campo %s debe ser unico');
 
             //Parametros de respuesta
             header('Content-type: application/json');
@@ -67,7 +70,7 @@
                 try{
                     $this->load->model('Materia_model');
                     $data = array(
-                        "idmateria" => $this->input->post("idmateria"),
+                        // "idmateria" => $this->input->post("idmateria"),
                         "materia" => $this->input->post("materia"),
                     );
                     $rows = $this->Materia_model->insert($data);
@@ -98,12 +101,12 @@
 
         public function update(){
             $this->form_validation->set_error_delimiters('', '');
-            $this->form_validation->set_rules("idmateria", "Id Materia", "required|is_natural_no_zero");
+            // $this->form_validation->set_rules("idmateria", "Id Materia", "required|is_natural_no_zero");
             $this->form_validation->set_rules("materia", "Materia", "required|max_length[50]");
 
             $this->form_validation->set_message('required', 'El campo %s es requerido');
             $this->form_validation->set_message('max_length', 'El campo %s debe tener como maximo %s caracteres');
-            $this->form_validation->set_message('is_natural_no_zero','El campo %s debe ser numero entero mayor que cero');
+            // $this->form_validation->set_message('is_natural_no_zero','El campo %s debe ser numero entero mayor que cero');
             // $this->form_validation->set_message('is_unique', 'El campo %s es unico');
 
             header('Content-type: application/json');

@@ -22,11 +22,9 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Id Profesor</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>NombreCompleto</th>
                     <th>FechaNacimiento</th>
                     <th>Profesion</th>
-                    <th>Sexo</th>
                     <th>email</th>
                     <th>Acciones</th>
                 </tr>
@@ -35,11 +33,9 @@
                 <?php foreach($records as $item): ?>
                     <tr>
                         <td><?php echo $item->idprofesor; ?></td>
-                        <td><?php echo $item->nombre; ?></td>
-                        <td><?php echo $item->apellido; ?></td>
+                        <td><?php echo $item->nombrecompleto; ?></td>
                         <td><?php echo $item->fecha_nacimiento; ?></td>
                         <td><?php echo $item->profesion?></td> 
-                        <td><?php echo $item->genero; ?></td>
                         <td><?php echo $item->email; ?></td>
                         <td>
                             <a href="<?=site_url('Profesores_controller/modificar/'.$item->idprofesor)?>">Modificar</a>

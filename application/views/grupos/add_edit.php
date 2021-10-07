@@ -25,7 +25,7 @@
 
                     <div class="form-group">
                         <label>Id Grupo</label>
-                        <input class="form-control" type="text" name="idgrupo" value="<?=isset($grupo)?$grupo->idgrupo: "";?>" <?=isset($grupo)?"disabled":"";?>>
+                        <input class="form-control" type="text" name="idgrupo" value="<?=isset($grupo)?$grupo->idgrupo: "";?>" readonly>
                     </div>
 
                     <div class="form-group">

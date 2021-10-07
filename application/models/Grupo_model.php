@@ -29,11 +29,14 @@
         }
 
         public function update($data, $id){
-            $this->db->set($data);
-            $this->db->where("idgrupo", $id);
-            $this->db->update("grupos", $data);
-            $rows = $this->db->affected_rows();
-            return $rows;
+            try{            
+                $this->db->where("idgrupo", $id);
+                $this->db->update("grupos", $data);
+                $rows = $this->db->affected_rows();
+                return $rows;
+            }catch(Exception $ex){
+                return -1;
+            }
         }
     }
 ?>

@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label>Id Profesor: </label>
-                            <input type="text" class="form-control" name="idprofesor" value="<?=isset($profesor) ? $profesor->idprofesor: ""; ?>"/>
+                            <input type="text" class="form-control" name="idprofesor" value="<?=isset($profesor) ? $profesor->idprofesor: ""; ?>" readonly/>
                         </div>
                         <div class="form-group">
                             <label>Nombre: </label>
@@ -52,13 +52,15 @@
                             <label>Profesion: </label>
                             <input type="text" class="form-control" name="profesion" value="<?=isset($profesor) ? $profesor->profesion: ""; ?>">
                         </div>
+
                         <div class="form-group">
-                            <label>Sexo: </label>
-                            <select class="form-control" name="sexo">
-                                <option value="H" >Hombre</option>
-                                <option value="M" >Mujer</option>
-                            </select>
+                            <label>Genero:</label>
+                            <label class="radio-inline"><input type="radio" name="sexo" value="H"
+                                <?=isset($profesor) && $profesor->genero == "H" ? "checked" : "";?> />Hombre</label>
+                            <label class="radio-inline"><input type="radio" name="sexo" value="M"
+                                <?=isset($profesor) && $profesor->genero == "M" ? "checked" : "";?> />Mujer</label>
                         </div>
+
                         <div class="form-group">
                             <label>Email: </label>
                             <input type="text" class="form-control" name="email" value="<?=isset($profesor) ? $profesor->email: ""; ?>">

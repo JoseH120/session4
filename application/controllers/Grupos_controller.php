@@ -7,6 +7,9 @@
             $this->load->helper('url');
             $this->load->library('session');
             $this->load->library('form_validation');
+            if(!isset($this->session->userdata['logged_in'])){
+                redirect("/");
+            }
         }
 
         //------------------------- FUNCIONES QUE CARGAN LAS VISTAS----------------------
@@ -55,7 +58,7 @@
             // reglas de validacion del formulario
             $this->form_validation->set_error_delimiters('','');
             
-            $this->form_validation->set_rules("idgrupo", "Id Grupo", "required|is_natural_no_zero|is_unique[grupos.idgrupo]");
+            // $this->form_validation->set_rules("idgrupo", "Id Grupo", "required|is_natural_no_zero|is_unique[grupos.idgrupo]");
             $this->form_validation->set_rules("num_grupo", "Num Grupo", "required|max_length[3]");
             $this->form_validation->set_rules("anio", "Año","required|max_length[4]|min_length[4]|is_natural_no_zero");
             $this->form_validation->set_rules("ciclo", "Ciclo", "required|max_length[2]|min_length[1]|is_natural_no_zero");
@@ -65,7 +68,7 @@
             $this->form_validation->set_message('required', "El campo %s es requerido");
             $this->form_validation->set_message('max_length', "El campo %s debe tener como maximo %s caracteres");
             $this->form_validation->set_message('min_length', "El campo %s debe tener al menos %s caracteres");
-            $this->form_validation->set_message('is_natural_no_zero', "El campo %s debe ser natural distinto de cero");
+            // $this->form_validation->set_message('is_natural_no_zero', "El campo %s debe ser natural distinto de cero");
 
             header('Content-type: application/json');
             $statusCode = 200;
@@ -75,7 +78,7 @@
                 try{
                     $this->load->model("Grupo_model");
                     $data = array(
-                        "idgrupo" => $this->input->post("idgrupo"),
+                        // "idgrupo" => $this->input->post("idgrupo"),
                         "num_grupo" => $this->input->post("num_grupo"),
                         "anio" => $this->input->post("anio"),
                         "ciclo" => $this->input->post("ciclo"),
@@ -112,7 +115,7 @@
             // reglas de validacion del formulario
             $this->form_validation->set_error_delimiters('','');
                         
-            $this->form_validation->set_rules("idgrupo", "Id Grupo", "required|is_natural_no_zero");
+            // $this->form_validation->set_rules("idgrupo", "Id Grupo", "required|is_natural_no_zero");
             $this->form_validation->set_rules("num_grupo", "Num Grupo", "required|max_length[3]");
             $this->form_validation->set_rules("anio", "Año","required|max_length[4]|min_length[4]|is_natural_no_zero");
             $this->form_validation->set_rules("ciclo", "Ciclo", "required|max_length[2]|min_length[1]|is_natural_no_zero");
@@ -122,7 +125,7 @@
             $this->form_validation->set_message('required', "El campo %s es requerido");
             $this->form_validation->set_message('max_length', "El campo %s debe tener como maximo %s caracteres");
             $this->form_validation->set_message('min_length', "El campo %s debe tener al menos %s caracteres");
-            $this->form_validation->set_message('is_natural_no_zero', "El campo %s debe ser natural distinto de cero");
+            // $this->form_validation->set_message('is_natural_no_zero', "El campo %s debe ser natural distinto de cero");
 
             header('Content-type: application/json');
             $statusCode = 200;

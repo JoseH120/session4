@@ -9,6 +9,9 @@
             $this->load->helper('url');
             $this->load->library('session');
             $this->load->library('form_validation');
+            if(!isset($this->session->userdata['logged_in'])){
+                redirect("/");
+            }
         }
         
         // ================================FUNCIONES QUE CARGAN LAS VISTAS==================================
