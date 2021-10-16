@@ -15,6 +15,9 @@
         <div class="col-sm-6">
             <a class="btn btn-success d-block" href="<?=site_url('Profesores_controller/insertar')?>">Agregar</a>
         </div>
+        <div class="col-sm-6">
+            <a class="btn btn-success d-block" href="<?=site_url('Profesores_controller/report_todos_los_profesores')?>">Reporte en PDF(Todos los profesores)</a>
+        </div>
     </div>
 
     <div class="row mt-4">

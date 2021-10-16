@@ -46,5 +46,11 @@
                 return -1;
             }
         }
+
+        public function reporteProfesores(){
+            $query = $this->db->query("SELECT idprofesor, CONCAT(nombre,' ',apellido) nombre, profesion ,email FROM profesores;");
+            $records = $query->result();
+            return $records;
+        }
     }
 ?>

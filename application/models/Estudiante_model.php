@@ -40,5 +40,11 @@
             $rows = $this->db->affected_rows(); 
             return $rows; 
         } 
+
+        public function getEstudiantes(){
+            $query = $this->db->query("SELECT a.idestudiante, CONCAT(a.nombre,' ',a.apellido) as nombre, (SELECT z.carrera from carreras z where z.idcarrera = a.idcarrera) carrera, a.email FROM estudiantes a;");
+            $records = $query->result();
+            return $records;
+        }
     } 
 ?>

@@ -18,6 +18,9 @@
         <div class="col-sm-6">
             <a class="btn btn-success d-block" href="<?= site_url('Carreras_controller/insertar')?>">Agregar</a>
         </div>
+        <div class="col-sm-6">
+            <a class="btn btn-success d-block" href="<?=site_url('Carreras_controller/report_todas_las_carreras')?>">Reporte en PDF(Todas las carreras)</a>
+        </div>
     </div>
     
     <div class="row mt-4">

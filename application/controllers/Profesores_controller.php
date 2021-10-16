@@ -168,5 +168,79 @@
             }
             redirect("Profesores_controller");
         }
+
+        //======================================================
+        //FUNCION QUE GENERA REPORTE
+        public function report_todos_los_profesores(){
+            //Se carga la libreria para generar tablas
+            $this->load->library('table');
+            //Se carga la libreria para generar reporte
+            $this->load->library('Report');
+            
+            $pdf = new Report(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+            $pdf->titulo = "Listado de profesores";
+            
+            //Informacion del documento
+            $pdf->SetCreator(PDF_CREATOR);
+            $pdf->SetAuthor('Jose Hernandez');
+            $pdf->SetTitle('Listado de profesores');
+            $pdf->SetSubject('Report generado usando Codeigniter y TCPDF');
+            $pdf->SetKeywords('TCPDF, PDF, MySQL, Codeigniter');
+
+            //Informacion por defecto del encabezado
+
+            //Fuente de encabezado y pie de pagina
+            $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN,'', PDF_FONT_SIZE_MAIN));
+            $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+            //Fuente por defecto Monospaced
+            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+            //Margenes
+            $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+            $pdf->setHeaderMargin(15);
+            $pdf->setFooterMargin(PDF_MARGIN_FOOTER);
+
+            //Quiebre de la pagina automatico
+            $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
+
+            //Factor de escala de imagen
+            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+            //Fuente del contenido
+            $pdf->SetFont('Helvetica', '', 10);
+
+            //---------------------------------------------
+            // Generar la tabla y su informacion
+            $template = array(
+                'table_open' => '<table border="1" cellpadding="2" cellspacing="1">',
+                'heading_cell_start' => '<th style="font-weight:bold; color:white; background-color: grey">',
+            );
+            $this->table->set_template($template);
+
+            $this->table->set_heading('Id Profesor', 'Nombre', 'Profesion', 'Email');
+
+            $this->load->model('Profesor_model');
+            $profesores = $this->Profesor_model->reporteProfesores();
+
+            foreach($profesores as $profesor):
+                $this->table->add_row($profesor->idprofesor, $profesor->nombre, $profesor->profesion, $profesor->email);
+            endforeach;
+            
+            $html = $this->table->generate();
+            //Generar informacion de la tabla
+
+            //Añadir pagina
+            $pdf->AddPage();
+
+            //Contenido de salida en HTML
+            $pdf->writeHTML($html, true, false, true, false, '');
+
+            //Reiniciar puntero a la ultima pagina
+            $pdf->lastPage();
+
+            //Cerrar y mostrar el reporte
+            $pdf->Output(md5(time()).'.pdf', 'I');
+        }
     }
 ?>

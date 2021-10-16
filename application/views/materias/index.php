@@ -15,6 +15,9 @@
         <div class="col-sm-6">
             <a class="btn btn-success d-block" href="<?=site_url('Materias_controller/insertar')?>">Agregar</a>
         </div>
+        <div class="col-sm-6">
+            <a class="btn btn-success d-block" href="<?=site_url('Materias_controller/report_todas_las_materias')?>">Reporte en PDF(Todas las materias)</a>
+        </div>
     </div>
 
     <div class="row mt-4">

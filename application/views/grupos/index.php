@@ -15,6 +15,9 @@
         <div class="col-sm-6">
             <a class="btn btn-success d-block" href="<?=site_url('Grupos_controller/insertar')?>">Agregar</a>
         </div>
+        <div class="col-sm-6">
+            <a class="btn btn-success d-block" href="<?=site_url('Grupos_controller/report_todos_los_grupos')?>">Reporte en PDF(Todos los grupos)</a>
+        </div>
     </div>
 
     <div class="row mt-4">
